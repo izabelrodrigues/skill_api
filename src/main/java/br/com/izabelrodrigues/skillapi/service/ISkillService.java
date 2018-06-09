@@ -4,4 +4,6 @@ import br.com.izabelrodrigues.skillapi.model.Skill;
 
 public interface ISkillService extends IGenericService<Skill> {
 
+	Skill findByDescricao(String descricao);
+
 }
