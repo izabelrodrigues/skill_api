@@ -9,8 +9,10 @@ import br.com.izabelrodrigues.skillapi.model.Skill;
 
 @Repository
 public interface ISkillRepository extends IGenericRepository<Skill> {
-	
+
 	@Query("select s from Skill s where s.descricao like %:descricao%")
 	public List<Skill> findByDescricaoContaining(String descricao);
+
+	public Skill findByDescricao(String descricao);
 
 }
