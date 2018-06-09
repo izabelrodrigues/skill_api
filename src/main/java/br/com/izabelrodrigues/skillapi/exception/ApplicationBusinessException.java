@@ -1,6 +1,10 @@
 package br.com.izabelrodrigues.skillapi.exception;
 
-public class ApplicationBusinessException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class ApplicationBusinessException extends RuntimeException {
 
 	/**
 	 *
