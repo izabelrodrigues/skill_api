@@ -1,15 +1,20 @@
 package br.com.izabelrodrigues.skillapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Skill {
+
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	@NotEmpty(message="skill.descricao.required")
+	@Column(unique=true, length=200)
 	private String descricao;
 
 	private String observacao;

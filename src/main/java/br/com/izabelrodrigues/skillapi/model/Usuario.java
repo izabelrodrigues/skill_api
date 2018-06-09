@@ -1,13 +1,10 @@
 package br.com.izabelrodrigues.skillapi.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Usuario {
@@ -15,16 +12,14 @@ public class Usuario {
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@NotEmpty(message="user.nome.required")
 	private String nome;
+
+	@NotEmpty(message="user.email.required")
+	@Size(max=40)
 	private String email;
 
-
-//	 @OneToMany(
-//		        mappedBy = "usuario",
-//		        cascade = CascadeType.ALL,
-//		        orphanRemoval = true
-//		    )
-//	private List<UsuarioSkill> skills = new ArrayList<>();
 
 	/**
 	 * @return the id
