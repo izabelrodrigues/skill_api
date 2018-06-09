@@ -21,14 +21,14 @@ public class NivelConhecimentoServiceImpl implements INivelConhecimentoService {
 
 
 	@Override
-	public List<String> findAll() {
+	public List<String> findAll(String idioma) {
 
 		List<String> niveis = new ArrayList<>();
 		NivelConhecimentoEnum[] values = NivelConhecimentoEnum.values();
 		Gson gson = new Gson();
 
 		for (NivelConhecimentoEnum nivelConhecimentoEnum : values) {
-			JsonObject jsonObject = convertEnumToJSON(nivelConhecimentoEnum);
+			JsonObject jsonObject = convertEnumToJSON(nivelConhecimentoEnum, idioma);
 			niveis.add(gson.toJson(jsonObject));
 		}
 
@@ -36,11 +36,11 @@ public class NivelConhecimentoServiceImpl implements INivelConhecimentoService {
 	}
 
 
-	private JsonObject convertEnumToJSON(NivelConhecimentoEnum nivelConhecimentoEnum) {
+	private JsonObject convertEnumToJSON(NivelConhecimentoEnum nivelConhecimentoEnum, String idioma) {
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("enum", nivelConhecimentoEnum.name());
-		jsonObject.addProperty("nomeTipo", mensagem.getString(nivelConhecimentoEnum.getNomeTipo()));
-		jsonObject.addProperty("descricao", mensagem.getString(nivelConhecimentoEnum.getDescricao()));
+		jsonObject.addProperty("name", mensagem.getString(nivelConhecimentoEnum.getNomeTipo(), idioma));
+		jsonObject.addProperty("description", mensagem.getString(nivelConhecimentoEnum.getDescricao(), idioma));
 		jsonObject.addProperty("value", nivelConhecimentoEnum.getValue());
 		return jsonObject;
 	}
