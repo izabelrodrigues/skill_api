@@ -6,6 +6,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * Classe de configuração da aplicação
+ * @author Izabel Rodrigues
+ *
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = "br.com.izabelrodrigues.skillapi")
 public class AppConfiguration extends SpringBootServletInitializer {
