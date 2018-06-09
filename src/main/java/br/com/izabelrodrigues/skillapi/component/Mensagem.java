@@ -1,12 +1,13 @@
 package br.com.izabelrodrigues.skillapi.component;
 
+import java.util.Locale;
+
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.stereotype.Component;
 
 /**
- * Componente de mensagem para acessar as mensagens do arquivo messages.properties (src/main/resources)
+ * Componente de mensagem para acessar as mensagens do arquivo messages_xx.properties (src/main/resources)
  * @author Izabel Rodrigues
  *
  */
@@ -19,16 +20,17 @@ public class Mensagem {
 	 * @param messageSourceAccessor
 	 */
 	public Mensagem(MessageSource messageSource) {
-		this.messageSourceAccessor = new MessageSourceAccessor(messageSource, LocaleContextHolder.getLocale());
+		this.messageSourceAccessor = new MessageSourceAccessor(messageSource);
 	}
 
 	/**
-	 * Retorna a messagem do arquivo message.properties
+	 * Retorna a messagem do arquivo message_xx.properties
 	 * @param chave
 	 * @return
 	 */
-	public String getString(String chave) {
-		return messageSourceAccessor.getMessage(chave);
+	public String getString(String chave, String idioma) {
+		Locale locale = new Locale(idioma);
+		return messageSourceAccessor.getMessage(chave, locale);
 	}
 
 
