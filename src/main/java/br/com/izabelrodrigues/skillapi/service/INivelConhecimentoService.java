@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface INivelConhecimentoService {
 
-	List<String> findAll();
+	List<String> findAll(String idioma);
 
 }
