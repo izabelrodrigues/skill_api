@@ -2,8 +2,6 @@ package br.com.izabelrodrigues.skillapi.service;
 
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
-
 public interface IGenericService <T>{
 
 
@@ -11,8 +9,12 @@ public interface IGenericService <T>{
 
 	Iterable<T> findAll();
 
-	ResponseEntity<?> saveOrUpdate(T entity);
+	Optional<T> saveOrUpdate(T entity);
 
 	void delete(Long id);
+
+	T save(T entity);
+
+	T update(T entity);
 
 }
