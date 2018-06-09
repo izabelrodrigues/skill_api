@@ -15,19 +15,19 @@ public class NivelConhecimentoConverter implements AttributeConverter<NivelConhe
 		NivelConhecimentoEnum nivel = null;
 		switch (value.intValue()) {
 		case 0:
-			nivel = NivelConhecimentoEnum.NENHUM;
+			nivel = NivelConhecimentoEnum.NONE;
 			break;
 		case 1:
-			nivel = NivelConhecimentoEnum.TEORIA;
+			nivel = NivelConhecimentoEnum.THEORY;
 			break;
 		case 2:
-			nivel = NivelConhecimentoEnum.BASICO;
+			nivel = NivelConhecimentoEnum.BASIC;
 			break;
 		case 3:
-			nivel = NivelConhecimentoEnum.INTERMEDIARIO;
+			nivel = NivelConhecimentoEnum.INTERMEDIARY;
 			break;
 		case 4:
-			nivel = NivelConhecimentoEnum.AVANCADO;
+			nivel = NivelConhecimentoEnum.EXPERT;
 			break;
 		}
 		return nivel;

@@ -9,11 +9,11 @@ package br.com.izabelrodrigues.skillapi.enums;
  */
 public enum NivelConhecimentoEnum {
 
-	NENHUM(0L, "nivel.nenhum.descricao","nivel.nenhum.nome"),
-	TEORIA(1L, "nivel.teoria.descricao", "nivel.teoria.nome"),
-	BASICO(2L, "nivel.basico.descricao","nivel.basico.nome"),
-	INTERMEDIARIO(3L, "nivel.intermediario.descricao", "nivel.intermediario.nome"),
-	AVANCADO(4L, "nivel.avancado.descricao", "nivel.avancado.nome");
+	NONE(0L, "nivel.nenhum.descricao","nivel.nenhum.nome"),
+	THEORY(1L, "nivel.teoria.descricao", "nivel.teoria.nome"),
+	BASIC(2L, "nivel.basico.descricao","nivel.basico.nome"),
+	INTERMEDIARY(3L, "nivel.intermediario.descricao", "nivel.intermediario.nome"),
+	EXPERT(4L, "nivel.avancado.descricao", "nivel.avancado.nome");
 
 	private Long value;
 	private String descricao;
