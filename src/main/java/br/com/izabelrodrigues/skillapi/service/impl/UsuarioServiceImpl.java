@@ -1,12 +1,9 @@
 package br.com.izabelrodrigues.skillapi.service.impl;
 
-import java.net.URI;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.izabelrodrigues.skillapi.model.Usuario;
 import br.com.izabelrodrigues.skillapi.repository.IUsuarioRepository;
@@ -29,16 +26,36 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
-	public ResponseEntity<?> saveOrUpdate(Usuario entity) {
-		Usuario userCreated = repository.save(entity);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/user/{id}")
-				.buildAndExpand(userCreated.getId()).toUri();
-		return ResponseEntity.created(location).build();
+	public Optional<Usuario> saveOrUpdate(Usuario entity) {
+		entity.setNome(entity.getNome().toUpperCase());
+		entity.setEmail(entity.getEmail().toUpperCase());
+		boolean isNew = (null == entity.getId());
+		return (isNew ? Optional.ofNullable(save(entity)) : Optional.ofNullable(update(entity)));
+
+
 	}
+
 
 	@Override
 	public void delete(Long id) {
 		repository.deleteById(id);
+	}
+
+	private boolean existsUsuario(Usuario usuario) {
+		return repository.findByNomeOrEmail(usuario.getNome(), usuario.getEmail()).isPresent();
+	}
+
+	@Override
+	public Usuario save(Usuario entity) {
+		if(!existsUsuario(entity)) {
+			return repository.save(entity);
+		}
+		return null;
+	}
+
+	@Override
+	public Usuario update(Usuario entity) {
+		return repository.save(entity);
 	}
 
 

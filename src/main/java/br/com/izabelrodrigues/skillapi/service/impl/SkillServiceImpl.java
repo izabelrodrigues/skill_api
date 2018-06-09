@@ -1,17 +1,12 @@
 package br.com.izabelrodrigues.skillapi.service.impl;
 
-import java.net.URI;
-import java.text.MessageFormat;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import javax.validation.Valid;
 
-import br.com.izabelrodrigues.skillapi.component.Mensagem;
-import br.com.izabelrodrigues.skillapi.exception.DuplicatedViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.izabelrodrigues.skillapi.model.Skill;
 import br.com.izabelrodrigues.skillapi.repository.ISkillRepository;
 import br.com.izabelrodrigues.skillapi.service.ISkillService;
@@ -21,9 +16,6 @@ public class SkillServiceImpl implements ISkillService {
 
 	@Autowired
 	private ISkillRepository repository;
-
-	@Autowired
-	private Mensagem mensagem;
 
 	@Override
 	public Optional<Skill> findById(Long id) {
@@ -36,41 +28,42 @@ public class SkillServiceImpl implements ISkillService {
 	}
 
 	@Override
-	public ResponseEntity<?> saveOrUpdate(Skill entity) {
+	public Optional<Skill> saveOrUpdate(@Valid Skill entity) {
 
 		entity.setDescricao(entity.getDescricao().toUpperCase());
 		boolean isNew = (null == entity.getId());
-		return (isNew ? save(entity) : update(entity));
+		return (isNew ? Optional.ofNullable(save(entity)) : Optional.ofNullable(update(entity)));
 
 	}
 
-	private ResponseEntity<?> save(Skill entity) {
-		Skill skill = null;
+	@Override
+	public Skill save(Skill entity) {
 
-		try {
-			skill = repository.save(entity);
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/skill/{id}")
-					.buildAndExpand(skill.getId()).toUri();
-
-			return ResponseEntity.created(location).body(skill);
-
-		} catch (Exception e) {
-			String skillDuplicada = mensagem.getString("skill.duplicated");
-			return new ResponseEntity<>(
-					new DuplicatedViolationException(MessageFormat.format(skillDuplicada, entity.getDescricao())),
-					HttpStatus.CONFLICT);
+		if (!existsSkill(entity)) {
+			return repository.save(entity);
 		}
 
+		return null;
+
 	}
 
-	private ResponseEntity<?> update(Skill entity) {
-		repository.save(entity);
-		return ResponseEntity.ok().build();
+	@Override
+	public Skill update(Skill entity) {
+		return repository.save(entity);
 	}
 
 	@Override
 	public void delete(Long id) {
 		repository.deleteById(id);
+	}
+
+	private boolean existsSkill(Skill entity) {
+		return (null != findByDescricao(entity.getDescricao()));
+	}
+
+	@Override
+	public Skill findByDescricao(String descricao) {
+		return repository.findByDescricao(descricao);
 	}
 
 }

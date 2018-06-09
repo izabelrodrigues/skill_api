@@ -1,13 +1,10 @@
 package br.com.izabelrodrigues.skillapi.service.impl;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.izabelrodrigues.skillapi.model.Usuario;
 import br.com.izabelrodrigues.skillapi.model.UsuarioSkill;
@@ -32,16 +29,9 @@ public class UsuarioSkillServiceImpl implements IUsuarioSkillService {
 	}
 
 	@Override
-	public ResponseEntity<?> saveOrUpdate(UsuarioSkill entity) {
+	public Optional <UsuarioSkill> saveOrUpdate(UsuarioSkill entity) {
 		boolean isNew = (null == entity.getId());
-
-
-		UsuarioSkill usuarioSkill = repository.save(entity);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/skill/{id}")
-				.buildAndExpand(usuarioSkill.getId()).toUri();
-
-		return( isNew ? ResponseEntity.created(location).body(usuarioSkill) : ResponseEntity.ok().build());
+		return (isNew ? Optional.ofNullable(save(entity)) : Optional.ofNullable(update(entity)));
 
 	}
 
@@ -57,9 +47,18 @@ public class UsuarioSkillServiceImpl implements IUsuarioSkillService {
 		return repository.findByUsuario(usuario);
 	}
 
-//	@Override
-//	public List<UsuarioSkill> findByUsuario(Long usuarioId) {
-//		return repository.findqualquercoisa(usuarioId);
-//	}
+	@Override
+	public UsuarioSkill save(UsuarioSkill entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UsuarioSkill update(UsuarioSkill entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }
