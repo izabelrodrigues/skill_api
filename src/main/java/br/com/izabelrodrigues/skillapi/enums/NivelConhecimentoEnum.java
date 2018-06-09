@@ -4,6 +4,7 @@
 package br.com.izabelrodrigues.skillapi.enums;
 
 /**
+ * Enum para definição dos níveis de conhecimento de uma Skill
  * @author Izabel Rodrigues
  *
  */
