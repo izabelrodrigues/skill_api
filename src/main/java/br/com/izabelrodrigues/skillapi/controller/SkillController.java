@@ -55,14 +55,14 @@ public class SkillController extends CustomExceptionHandler {
 	}
 
 	@PutMapping(path = "/update", consumes = "application/json")
-	public ResponseEntity<?> update(@RequestBody Skill skill, @RequestHeader(name=Constants.ACCEPT_LANGUAGE) String idioma) {
+	public ResponseEntity<Object> update(@RequestBody Skill skill, @RequestHeader(name=Constants.ACCEPT_LANGUAGE) String idioma) {
 		try {
 			Optional<Skill> entity = service.saveOrUpdate(skill);
 			if (entity.isPresent()) {
 				return ResponseEntity.ok().build();
 			}
 			else {
-				String msg = mensagem.getString("generic.error.action", idioma);
+				String msg = mensagem.getString(Constants.GENERIC_ERROR_ACTION, idioma);
 				String action = mensagem.getString("action.update", idioma);
 				throw new ApplicationBusinessException(MessageFormat.format(msg, action));
 			}
@@ -72,7 +72,7 @@ public class SkillController extends CustomExceptionHandler {
 	}
 
 	@PostMapping(path = "/create", produces = "application/json")
-	public ResponseEntity<?> save(@RequestBody Skill skill, @RequestHeader(name=Constants.ACCEPT_LANGUAGE) String idioma) {
+	public ResponseEntity<Object> save(@RequestBody Skill skill, @RequestHeader(name=Constants.ACCEPT_LANGUAGE) String idioma) {
 
 
 		try {
@@ -99,10 +99,10 @@ public class SkillController extends CustomExceptionHandler {
 
 		try {
 			service.delete(id);
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
-			String erro = mensagem.getString("generic.error.action", idioma);
-			String msg = MessageFormat.format(mensagem.getString("generic.error.action", idioma), erro);
+			String action = mensagem.getString("action.delete", idioma);
+			String msg = MessageFormat.format(mensagem.getString(Constants.GENERIC_ERROR_ACTION, idioma), action);
 			throw new ApplicationBusinessException(msg);
 		}
 	}

@@ -54,7 +54,7 @@ public class UsuarioController extends CustomExceptionHandler {
 	}
 
 	@PostMapping(path = "/create", produces = "application/json")
-	public ResponseEntity<?> save(@RequestBody Usuario user, @RequestHeader(name=Constants.ACCEPT_LANGUAGE) String idioma){
+	public ResponseEntity<Object> save(@RequestBody Usuario user, @RequestHeader(name=Constants.ACCEPT_LANGUAGE) String idioma){
 
 		try {
 			Optional<Usuario> createUser = service.saveOrUpdate(user);
@@ -78,7 +78,7 @@ public class UsuarioController extends CustomExceptionHandler {
 	}
 
 	@PutMapping(path = "/update", consumes = "application/json")
-	public ResponseEntity<?> update(@RequestBody Usuario usuario, @RequestHeader(name=Constants.ACCEPT_LANGUAGE) String idioma) {
+	public ResponseEntity<Object> update(@RequestBody Usuario usuario, @RequestHeader(name=Constants.ACCEPT_LANGUAGE) String idioma) {
 		try {
 			Optional<Usuario> entity = service.saveOrUpdate(usuario);
 			if (entity.isPresent()) {

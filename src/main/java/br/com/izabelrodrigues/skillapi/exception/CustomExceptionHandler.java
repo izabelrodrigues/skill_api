@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import br.com.izabelrodrigues.skillapi.Constants;
 import br.com.izabelrodrigues.skillapi.component.Mensagem;
 
 public class CustomExceptionHandler {
@@ -31,8 +32,8 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(NotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	VndErrors notFoundHandler(NotFoundException ex) {
-		VndErrors vndErrors = new VndErrors("message", ex.getMessage());
-		vndErrors.add(new VndError("http_status", HttpStatus.NOT_FOUND.toString()));
+		VndErrors vndErrors = new VndErrors(Constants.MESSAGE, ex.getMessage());
+		vndErrors.add(new VndError(Constants.HTTP_STATUS, HttpStatus.NOT_FOUND.toString()));
 		return vndErrors;
 	}
 
@@ -40,8 +41,8 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(ConstraintViolationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	VndErrors constraintErrorHandler(ConstraintViolationException ex) {
-		VndErrors vndErrors = new VndErrors("message", ex.getMessage());
-		vndErrors.add(new VndError("http_status", HttpStatus.BAD_REQUEST.toString()));
+		VndErrors vndErrors = new VndErrors(Constants.MESSAGE, ex.getMessage());
+		vndErrors.add(new VndError(Constants.HTTP_STATUS, HttpStatus.BAD_REQUEST.toString()));
 		return vndErrors;
 	}
 
@@ -49,8 +50,8 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	VndErrors internalServerErrorHandler(Exception ex) {
-		VndErrors vndErrors = new VndErrors("message", ex.getMessage());
-		vndErrors.add(new VndError("http_status", HttpStatus.INTERNAL_SERVER_ERROR.toString()));
+		VndErrors vndErrors = new VndErrors(Constants.MESSAGE, ex.getMessage());
+		vndErrors.add(new VndError(Constants.HTTP_STATUS, HttpStatus.INTERNAL_SERVER_ERROR.toString()));
 		return vndErrors;
 	}
 
@@ -58,8 +59,8 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	VndErrors invalidArgurmentHandler(MethodArgumentNotValidException ex) {
-		VndErrors vndErrors = new VndErrors("message", ex.getMessage());
-		vndErrors.add(new VndError("http_status", HttpStatus.BAD_REQUEST.toString()));
+		VndErrors vndErrors = new VndErrors(Constants.MESSAGE, ex.getMessage());
+		vndErrors.add(new VndError(Constants.HTTP_STATUS, HttpStatus.BAD_REQUEST.toString()));
 		return vndErrors;
 	}
 

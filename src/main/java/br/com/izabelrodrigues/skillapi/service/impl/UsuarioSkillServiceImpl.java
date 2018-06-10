@@ -49,13 +49,11 @@ public class UsuarioSkillServiceImpl implements IUsuarioSkillService {
 
 	@Override
 	public UsuarioSkill save(UsuarioSkill entity) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public UsuarioSkill update(UsuarioSkill entity) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
