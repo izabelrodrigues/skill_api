@@ -1,0 +1,6 @@
+token-sonar: 52283abbfa49f185dc0bc32061ffae797f103ea0
+
+mvn sonar:sonar \
+  -Dsonar.projectKey=SKILL_API \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=52283abbfa49f185dc0bc32061ffae797f103ea0
