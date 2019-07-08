@@ -2,8 +2,8 @@ package br.com.izabelrodrigues.skill.api.repository;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.izabelrodrigues.skill.api.ResetDatabaseTestExecutionListener;
 import br.com.izabelrodrigues.skill.api.SkillApiApplication;
+import br.com.izabelrodrigues.skill.api.SkillApiPrepareTest;
 import br.com.izabelrodrigues.skill.api.model.Skill;
 
 @TestExecutionListeners(mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS, listeners = {
@@ -36,15 +37,7 @@ public class SkillRepositoryTest {
 	@Before
 	public void initDatabase() {
 
-		Skill skill_1 = new Skill(null, SKILL_NOME_TESTE_REP1, SKILL_DESC_REP1, true);
-		Skill skill_2 = new Skill(null, "TESTE REP2", "DESC REP2", true);
-		Skill skill_3 = new Skill(null, "TESTE REP3", "DESC REP3", true);
-
-		List<Skill> lista = new ArrayList<>();
-		lista.add(skill_1);
-		lista.add(skill_2);
-		lista.add(skill_3);
-		skillRepository.saveAll(lista);
+		skillRepository.saveAll(SkillApiPrepareTest.getListaInicialSkill());
 	}
 
 	@Test
@@ -84,6 +77,15 @@ public class SkillRepositoryTest {
 		Page<Skill> skillByNome = skillRepository.findByNome(null, NAO_ESTOU_NO_BANCO);
 		List<Skill> content = skillByNome.getContent();
 		assertTrue("A lista não deveria ter elementos", content.isEmpty());
+	}
+
+	@Test
+	public void quandoBuscaSkillPorIdComIdExistenteDeveRetornarASkillDoBanco() {
+		Optional<Skill> skillById = skillRepository.findById(1L);
+
+		boolean skillEncontrada = skillById.isPresent();
+
+		assertTrue("Deveria existir Skill com ID 1", skillEncontrada == true);
 	}
 
 }
