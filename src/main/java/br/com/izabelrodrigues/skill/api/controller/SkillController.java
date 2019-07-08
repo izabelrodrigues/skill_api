@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -35,33 +37,33 @@ public class SkillController {
 	@Autowired
 	private SkillService service;
 
-	/*
-	 * Forma 1 de paginar
-	 * 
-	 * @GetMapping public Page<SkillDto> listar(@RequestParam(required = false)
-	 * String nome, @RequestParam int page, @RequestParam int size, @RequestParam
-	 * String ordenacao) { Pageable paginacao = PageRequest.of(page, size,
-	 * Direction.DESC, ordenacao); return service.listar(paginacao, nome); }
-	 */
-
 	/**
 	 * Chamada exemplo: localhost:8080/skills?page=0&size=10&sort=nome,desc
+	 *
+	 * @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size =
+	 *                       10): Se não passar a ordenação, vai ordenar pelo id
+	 *                       desc e cada página vai conter 10 registros
 	 * 
-	 * @PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10): 
-	 * Se não passar a ordenação, vai ordenar pelo id desc e cada página vai conter 10 registros
-	 *  
-	 * Para funcionar a classe principal tem que estar anotada com @EnableSpringDataWebSupport
-	 * 
+	 *                       Para funcionar, a classe principal tem que estar
+	 *                       anotada com @EnableSpringDataWebSupport
+	 *
 	 * @param nome
 	 * @param paginacao
 	 * @return
 	 */
 	@GetMapping
+	@Cacheable(value = "listar_skill_cache")
 	public Page<SkillDto> listar(@RequestParam(required = false) String nome,
 			@PageableDefault(sort = "id", direction = Direction.DESC, page = 0, size = 10) Pageable paginacao) {
 		return service.listar(paginacao, nome);
 	}
 
+	/**
+	 * Busca uma skill pelo id
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<SkillDto> buscarPorId(@PathVariable Long id) {
 		Optional<Skill> skillOptional = getById(id);
@@ -71,8 +73,15 @@ public class SkillController {
 		return ResponseEntity.notFound().build();
 	}
 
+	/**
+	 *
+	 * @param skillDto
+	 * @param uriBuilder
+	 * @return
+	 */
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "listar_skill_cache", allEntries = true)
 	public ResponseEntity<SkillDto> cadastrar(@RequestBody @Valid SkillDto skillDto, UriComponentsBuilder uriBuilder) {
 
 		Skill skill = SkillEntityConverter.convertFromDto(skillDto);
@@ -84,6 +93,7 @@ public class SkillController {
 
 	@PutMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listar_skill_cache", allEntries = true)
 	public ResponseEntity<SkillDto> atualizar(@PathVariable Long id, @RequestBody @Valid SkillDto skillDto) {
 		Optional<Skill> skillOptional = getById(id);
 		if (skillOptional.isPresent()) {
@@ -98,6 +108,7 @@ public class SkillController {
 
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listar_skill_cache", allEntries = true)
 	public ResponseEntity<Skill> remover(@PathVariable Long id) {
 		Optional<Skill> skillOptional = getById(id);
 		if (skillOptional.isPresent()) {
