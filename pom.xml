@@ -11,7 +11,7 @@
 		<java.version>10</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring-boot-version>2.0.2.RELEASE</spring-boot-version>
-		<mysql-version>8.0.11</mysql-version>
+		<mysql-version>8.0.16</mysql-version>
 		<asm-version>6.2</asm-version>
 		<jaxb-api-version>2.3.0</jaxb-api-version>
 		<jaxb-core-version>2.3.0</jaxb-core-version>
