@@ -10,7 +10,7 @@
 		<maven.plugin.version>3.7.0</maven.plugin.version>
 		<java.version>10</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-boot-version>2.0.2.RELEASE</spring-boot-version>
+		<spring-boot-version>2.5.12</spring-boot-version>
 		<mysql-version>8.0.11</mysql-version>
 		<asm-version>6.2</asm-version>
 		<jaxb-api-version>2.3.0</jaxb-api-version>
